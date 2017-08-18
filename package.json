@@ -1,0 +1,35 @@
+{
+  "name": "hm-discover",
+  "version": "1.0.0",
+  "description": "Discover Homematic Devices",
+  "main": "index.js",
+  "scripts": {
+    "test": "xo --space 4",
+    "lintfix": "xo --space 4 --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hobbyquaker/hm-discover.git"
+  },
+  "keywords": [
+    "homematic",
+    "smarthome",
+    "discover",
+    "find",
+    "ccu"
+  ],
+  "author": "Sebastian Raff <hq@ccu.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hobbyquaker/hm-discover/issues"
+  },
+  "homepage": "https://github.com/hobbyquaker/hm-discover#readme",
+  "dependencies": {
+    "async": "^2.5.0",
+    "binary": "^0.3.0",
+    "nextport": "^1.0.0"
+  },
+  "devDependencies": {
+    "xo": "^0.18.2"
+  }
+}
