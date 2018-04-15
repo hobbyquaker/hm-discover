@@ -30,9 +30,11 @@ hmDiscover(console.dir);
     "serial": "KEQ0112345",
     "address": "192.168.2.130",
     "interfaces": {
+      "ReGaHSS": true,  
       "BidCos-Wired": false,
       "BidCos-RF": true,
-      "HmIP": true,
+      "HmIP-RF": true,
+      "VirtualDevices": true,
       "CUxD": false
     }
   },
@@ -41,9 +43,11 @@ hmDiscover(console.dir);
     "serial": "JEQ0123456",
     "address": "192.168.2.3",
     "interfaces": {
+      "ReGaHSS": true,  
       "BidCos-Wired": true,
       "BidCos-RF": true,
-      "HmIP": false,
+      "VirtualDevices": false,
+      "HmIP-RF": false,
       "CUxD": true
     }
   }
