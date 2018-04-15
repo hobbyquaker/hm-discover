@@ -25,7 +25,7 @@ function hmDiscover(options, callback) {
     } else if (typeof options !== 'object') {
         options = {};
     }
-    const timeout = options.timeout || 500;
+    const timeout = options.timeout || 1200;
     const localport = 1024;
     const remoteport = 43439;
     const message = Buffer.from([0x02, 0x8F, 0x91, 0xC0, 0x01, 'e', 'Q', '3', 0x2D, 0x2A, 0x00, 0x2A, 0x00, 0x49]);
