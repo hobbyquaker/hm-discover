@@ -4,8 +4,8 @@
   "description": "Discover Homematic Devices",
   "main": "index.js",
   "scripts": {
-    "test": "xo --space 4",
-    "lintfix": "xo --space 4 --fix"
+    "test": "xo",
+    "lintfix": "xo --fix"
   },
   "repository": {
     "type": "git",
@@ -25,11 +25,14 @@
   },
   "homepage": "https://github.com/hobbyquaker/hm-discover#readme",
   "dependencies": {
-    "async": "^2.5.0",
+    "async": "^2.6.0",
     "binary": "^0.3.0",
     "nextport": "^1.0.0"
   },
   "devDependencies": {
-    "xo": "^0.18.2"
+    "xo": "^0.20.3"
+  },
+  "xo": {
+    "space": 4
   }
 }
