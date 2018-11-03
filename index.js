@@ -52,7 +52,7 @@ function hmDiscover(options, callback) {
                     if (foundAddresses.indexOf(remote.address) === -1) {
                         foundAddresses.push(remote.address);
                         async.parallel({
-                            'ReGaHSS': callback => {
+                            ReGaHSS: callback => {
                                 checkservice(remote.address, 1999, callback);
                             },
                             'BidCos-Wired': callback => {
@@ -64,7 +64,7 @@ function hmDiscover(options, callback) {
                             'HmIP-RF': callback => {
                                 checkservice(remote.address, 2010, callback);
                             },
-                            'VirtualDevices': callback => {
+                            VirtualDevices: callback => {
                                 checkservice(remote.address, 9292, callback);
                             },
                             CUxD: callback => {
