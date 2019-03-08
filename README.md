@@ -1,7 +1,7 @@
 # hm-discover
 
 [![NPM version](https://badge.fury.io/js/hm-discover.svg)](http://badge.fury.io/js/hm-discover)
-[![Dependency Status](https://img.shields.io/gemnasium/hobbyquaker/hm-discover.svg?maxAge=2592000)](https://gemnasium.com/github.com/hobbyquaker/hm-discover)
+[![dependencies Status](https://david-dm.org/hobbyquaker/hm-discover/status.svg)](https://david-dm.org/hobbyquaker/hm-discover)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 [![License][mit-badge]][mit-url]
 
@@ -56,7 +56,7 @@ hmDiscover(console.dir);
 
 ## License
 
-MIT (c) 2017 [Sebastian Raff](https://github.com/hobbyquaker)
+MIT (c) 2017-2019 [Sebastian Raff](https://github.com/hobbyquaker)
 
 [mit-badge]: https://img.shields.io/badge/License-MIT-blue.svg?style=flat
 [mit-url]: LICENSE
