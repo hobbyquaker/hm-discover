@@ -2,7 +2,6 @@ const net = require('net');
 const dgram = require('dgram');
 const binary = require('binary');
 const async = require('async');
-const nextPort = require('nextport');
 
 function checkservice(host, port, callback) {
     const c = net.connect({
@@ -26,7 +25,6 @@ function hmDiscover(options, callback) {
         options = {};
     }
     const timeout = options.timeout || 1200;
-    const localport = 1024;
     const remoteport = 43439;
     const message = Buffer.from([0x02, 0x8F, 0x91, 0xC0, 0x01, 'e', 'Q', '3', 0x2D, 0x2A, 0x00, 0x2A, 0x00, 0x49]);
     const found = [];
@@ -79,11 +77,9 @@ function hmDiscover(options, callback) {
             });
     });
 
-    nextPort(localport, port => {
-        client.bind(port, () => {
-            client.setBroadcast(true);
-            client.send(message, 0, message.length, remoteport, '255.255.255.255');
-        });
+    client.bind(() => {
+        client.setBroadcast(true);
+        client.send(message, 0, message.length, remoteport, '255.255.255.255');
     });
 
     setTimeout(() => {
