@@ -1,6 +1,6 @@
 {
   "name": "hm-discover",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Discover Homematic Devices",
   "main": "index.js",
   "scripts": {
@@ -26,11 +26,10 @@
   "homepage": "https://github.com/hobbyquaker/hm-discover#readme",
   "dependencies": {
     "async": "^2.6.0",
-    "binary": "^0.3.0",
-    "nextport": "^1.0.0"
+    "binary": "^0.3.0"
   },
   "devDependencies": {
-    "xo": "^0.20.3"
+    "xo": "^0.24.0"
   },
   "xo": {
     "space": 4
