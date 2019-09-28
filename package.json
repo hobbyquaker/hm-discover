@@ -1,6 +1,6 @@
 {
   "name": "hm-discover",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Discover Homematic Devices",
   "main": "index.js",
   "scripts": {
@@ -19,17 +19,20 @@
     "ccu"
   ],
   "author": "Sebastian Raff <hobbyquaker@gmail.com>",
+  "contributors": [
+    "Helge Heß https://github.com/helje5"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/hobbyquaker/hm-discover/issues"
   },
   "homepage": "https://github.com/hobbyquaker/hm-discover#readme",
   "dependencies": {
-    "async": "^2.6.0",
+    "async": "^3.1.0",
     "binary": "^0.3.0"
   },
   "devDependencies": {
-    "xo": "^0.24.0"
+    "xo": "^0.25.3"
   },
   "xo": {
     "space": 4
