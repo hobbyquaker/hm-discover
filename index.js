@@ -44,7 +44,7 @@ function hmDiscover(options, callback) {
                     const device = {
                         type: String(data.type),
                         serial: String(data.serial),
-                        version: String(data.versions),
+                        version: String(data.version),
                         address: remote.address
                     };
                     if (foundAddresses.indexOf(remote.address) === -1) {
