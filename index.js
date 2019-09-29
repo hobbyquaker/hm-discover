@@ -9,11 +9,17 @@ function checkservice(host, port, callback) {
         host,
         timeout: this.timeout
     }, () => {
-        callback(null, true);
-        c.end();
+        if (typeof callback === 'function') {
+            callback(null, true);
+            callback = null;
+            c.end();
+        }
     });
     c.on('error', () => {
-        callback(null, false);
+        if (typeof callback === 'function') {
+            callback(null, false);
+            callback = null;
+        }
     });
 }
 
