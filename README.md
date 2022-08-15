@@ -35,7 +35,8 @@ hmDiscover(console.dir);
       "BidCos-RF": true,
       "HmIP-RF": true,
       "VirtualDevices": true,
-      "CUxD": false
+      "CUxD": false,
+      "CCU-Jack": true
     }
   },
   {
@@ -48,7 +49,8 @@ hmDiscover(console.dir);
       "BidCos-RF": true,
       "VirtualDevices": false,
       "HmIP-RF": false,
-      "CUxD": true
+      "CUxD": true,
+      "CCU-Jack": true
     }
   }
 ]

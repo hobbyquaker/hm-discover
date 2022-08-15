@@ -1,27 +1,17 @@
-const net = require('net');
-const dgram = require('dgram');
-const binary = require('binary');
-const async = require('async');
+/* eslint-disable unicorn/prefer-module */
+const net = require('node:net');
+const dgram = require('node:dgram');
+const buf = require('node:buffer').Buffer;
 
-function checkservice(host, port, callback) {
-    const c = net.connect({
-        port,
-        host,
-        timeout: this.timeout
-    }, () => {
-        if (typeof callback === 'function') {
-            callback(null, true);
-            callback = null;
-            c.end();
-        }
+const checkservice = (id, host, port) => new Promise(resolve => {
+    const c = net.connect({port, host, timeout: this.timeout}, () => {
+        c.end();
+        resolve({id, value: true});
     });
     c.on('error', () => {
-        if (typeof callback === 'function') {
-            callback(null, false);
-            callback = null;
-        }
+        resolve({id, value: false});
     });
-}
+});
 
 function hmDiscover(options, callback) {
     if (typeof options === 'function') {
@@ -32,56 +22,50 @@ function hmDiscover(options, callback) {
     }
 
     const timeout = options.timeout || 1200;
-    const remoteport = 43439;
-    const message = Buffer.from([0x02, 0x8F, 0x91, 0xC0, 0x01, 'e', 'Q', '3', 0x2D, 0x2A, 0x00, 0x2A, 0x00, 0x49]);
+    const remoteport = 43_439;
+    const nullByte = buf.from([0x00]);
+    const message = buf.from([0x02, 0x8F, 0x91, 0xC0, 0x01, 'e', 'Q', '3', 0x2D, 0x2A, 0x00, 0x2A, 0x00, 0x49]);
+    const header = message.subarray(0, 5);
     const found = [];
     const foundAddresses = [];
-    const client = dgram.createSocket('udp4');
-    client.on('message', (msg, remote) => {
-        binary.parse(msg)
-            .buffer('header', 5)
-            .scan('type', Buffer.from([0x00]))
-            .scan('serial', Buffer.from([0x00]))
-            .word8('byte0')
-            .word8('byte1')
-            .word8('byte2')
-            .scan('version', Buffer.from([0x00]))
-            .tap(data => {
-                if (data.header.toString('hex') === '028f91c001') {
-                    const device = {
-                        type: String(data.type),
-                        serial: String(data.serial),
-                        version: String(data.version),
-                        address: remote.address
-                    };
-                    if (foundAddresses.indexOf(remote.address) === -1) {
-                        foundAddresses.push(remote.address);
-                        async.parallel({
-                            ReGaHSS: callback => {
-                                checkservice(remote.address, 1999, callback);
-                            },
-                            'BidCos-Wired': callback => {
-                                checkservice(remote.address, 2000, callback);
-                            },
-                            'BidCos-RF': callback => {
-                                checkservice(remote.address, 2001, callback);
-                            },
-                            'HmIP-RF': callback => {
-                                checkservice(remote.address, 2010, callback);
-                            },
-                            VirtualDevices: callback => {
-                                checkservice(remote.address, 9292, callback);
-                            },
-                            CUxD: callback => {
-                                checkservice(remote.address, 8701, callback);
-                            }
-                        }, (err, res) => { // eslint-disable-line handle-callback-err
-                            device.interfaces = res;
-                            found.push(device);
-                        });
-                    }
+    const client = dgram.createSocket({type: 'udp4'});
+
+    client.on('message', async (response, remote) => {
+        if (response.subarray(0, 5).equals(header)) {
+            const indexType = response.indexOf(nullByte, 5);
+            const indexSerial = response.indexOf(nullByte, indexType + 1);
+            const indexVersion = response.indexOf(nullByte, indexSerial + 1 + 3);
+
+            const device = {
+                type: response.toString('utf8', 5, indexType),
+                serial: response.toString('utf8', indexType + 1, indexSerial),
+                version: response.toString('utf8', indexSerial + 1 + 3, indexVersion),
+                address: remote.address,
+                interfaces: {},
+            };
+
+            if (!foundAddresses.includes(remote.address)) {
+                foundAddresses.push(remote.address);
+
+                const requests = [
+                    {id: 'ReGaHSS', port: 1999},
+                    {id: 'BidCos-Wired', port: 2000},
+                    {id: 'BidCos-RF', port: 2001},
+                    {id: 'HmIP-RF', port: 2010},
+                    {id: 'VirtualDevices', port: 9292},
+                    {id: 'CUxD', port: 8701},
+                    {id: 'CCU-Jack', port: 2121},
+                ];
+
+                const returnValues = await Promise.all(requests.map(async item => checkservice(item.id, remote.address, item.port)));
+
+                for (const item of returnValues) {
+                    device.interfaces[item.id] = item.value;
                 }
-            });
+
+                found.push(device);
+            }
+        }
     });
 
     client.bind(() => {
